@@ -1,16 +1,24 @@
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { setLogin, setSearchKeyword } from "../store/action";
+import { setLogin, searchBook } from "../store/action";
+import {useState,useEffect } from "react";
+
+
 function Navbar() {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const [searchKeyword, setSearchKeyword] = useState(false);
   const keywordHandle = (event) => {
     console.log(event.target.value);
-    dispatch(setSearchKeyword(event.target.value));
+    setSearchKeyword(event.target.value)
+   
   };
+ 
   const searchButtonHandle = (event) => {
+    console.log('search but');
     event.preventDefault();
+    dispatch(searchBook(searchKeyword));
+  
   };
   const logoutHandle = (event) => {
     event.preventDefault();
@@ -57,7 +65,7 @@ function Navbar() {
            ChangePass
           </a>
         </span>
-        <form className="d-flex search-navbar">
+        <form className="d-flex search-navbar" onSubmit={searchButtonHandle}>
           <input
             className="form-control me-2"
             onChange={keywordHandle}

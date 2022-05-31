@@ -19,17 +19,15 @@ function HomePage() {
   const isDataFetched = useSelector((state) => state.isDataFetched);
   const currentPage = useSelector((state) => state.currentPage);
   const searchKeyword = useSelector((state) => state.searchKeyword);
+  const bookList = useSelector((state) => state.bookList);
   console.log(searchKeyword == true);
 
   const tes = useSelector((state) => state.tes);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
-    if (isDataFetched == false) {
-      dispatch(getDocumentsAction());
-      dispatch(setIsDataFetched(true));
-    }
-  }, [documents, isDataFetched]);
+ 
+  }, [bookList, isDataFetched]);
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -37,6 +35,11 @@ function HomePage() {
     event.preventDefault();
     // console.log(selectedFile);
     dispatch(uploadAction(selectedFile));
+  };
+  const test = (event) => {
+    event.preventDefault();
+    // console.log(selectedFile);
+    console.log('masuk',bookList);
   };
   const downloadHandle = (event, doc) => {
     event.preventDefault();
@@ -47,6 +50,12 @@ function HomePage() {
     <>
       <div className="home">
         <Navbar />\
+        <button onClick={test}>tes</button>
+        {bookList.map(bird => (
+          <li key={bird.name}>
+        sadsad
+          </li>
+        ))}
         <div className="content-container">
           <div className="card">
             <img className="card-img-top" src="..." alt="Card image cap"></img>

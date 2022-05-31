@@ -4,6 +4,38 @@ import Toast from "../helpers/swalToast";
 import axios from "axios";
 
 const server = "http://localhost:3001";
+
+export function searchBook(payload) {
+  console.log(payload,'searchBook');
+  let bookList;
+  return function (dispatch) {
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${payload}&maxResults=40`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        if (result.error) {
+          Toast.fire({
+            icon: "warning",
+            title: result.error,
+          });
+        } else {
+          console.log(result.items,'result api');
+          bookList = result.items
+          console.log(bookList);
+         dispatch(setBookList(bookList))
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+}
 export function loginAction(payload) {
   console.log(payload);
   return function (dispatch) {
@@ -34,6 +66,10 @@ export function loginAction(payload) {
         console.log(error);
       });
   };
+}
+export function setBookList(payload) {
+  console.log('masuk set login')
+  return { type: "SET_BOOK_LIST", payload };
 }
 
 export function setLogin(payload) {

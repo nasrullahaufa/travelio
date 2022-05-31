@@ -7,6 +7,7 @@ const intialState = {
   documents: [],
   currentPage: 1,
   searchKeyword: "",
+  bookList: ['ggwp'],
 };
 
 function reducer(state = intialState, action) {
@@ -22,6 +23,9 @@ function reducer(state = intialState, action) {
       return { ...state, currentPage: payload };
     case "SET_KEYWORD":
       return { ...state, searchKeyword: payload };
+    case "SET_BOOK_LIST":
+      console.log('reducer');
+      return { ...state, bookList: payload };
 
     default:
       return state;
@@ -29,5 +33,5 @@ function reducer(state = intialState, action) {
 }
 
 const store = createStore(reducer, applyMiddleware(thunk));
-
+;
 export default store;
